@@ -1,0 +1,21 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [vector]
+}
+
+model Document {
+  id        Int                   @id @default(autoincrement())
+  createdAt DateTime              @default(now()) @map("created_at")
+  name      String                @unique
+  original  String
+  embedding Unsupported("vector")
+  source    String
+
+  @@map("documents")
+}
